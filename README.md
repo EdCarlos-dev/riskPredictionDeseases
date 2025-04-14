@@ -1,4 +1,4 @@
-# :chart_with_upwards_trend: Predição de problemas cardiológicos utilizando dados públicos 
+# :chart_with_upwards_trend: Aplicação de Técnicas de Data Science para Predição de Doenças Cardíacas em Dados Públicos 
 
 :mortar_board: Trabalho desenvolvido para o curso de MBA em Data Science e Analytics 
 USP - ESALQ
@@ -15,3 +15,8 @@ The Behavioral Risk Factor Surveillance System (BRFSS) is the nation’s premier
 
 Referência do dado utilzado
 https://www.cdc.gov/brfss/annual_data/annual_2023.html 
+
+## Exploração dos Dados 
+
+### Vriáveis de interesse
+### Distribuição dos dados
