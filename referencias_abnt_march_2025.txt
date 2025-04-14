@@ -1,0 +1,46 @@
+Kasartzian DI; Tsiampalis T. 2025. Transforming Cardiovascular Risk Prediction: A Review of Machine Learning and . Life (Basel, Switzerland) 15(1): ??.
+
+Autor desconhecido. ????. Título desconhecido. Revista desconhecida ?(?): ??.
+
+Greenland, Sander; Daniel, Rhian; Pearce, Neil. 2016. Outcome modelling strategies in epidemiology: traditional methods and basic. International Journal of Epidemiology 45(2): 565.
+
+Javaid A; Zghyer F; Kim C; Spaulding EM; Isakadze N; Ding J; Kargillis D; Gao Y; Rahman F; Brown DE; Saria S; Martin SS; Kramer CM; Blumenthal RS; Marvel FA. 2022. Medicine 2032: The future of cardiovascular disease prevention with machine . American journal of preventive cardiology 12(?): 100379.
+
+Mir, Rashid ; Elfaki, Imadeldin ; Javid, Jamsheed ; Barnawi, Jameel ; Altayar, Malik A. ; Albalawi, Salem O. ; Jalal, Mohammed M. ; Tayeb, Faris J. ; Yousif, Aadil ; Ullah, Mohammad F. ; AbuDuhier, Faisel M. . 2022. Título desconhecido. Revista desconhecida 12(11): ??.
+
+Sarraju A; Ward A; Chung S; Li J; Scheinker D; Rodríguez F. 2021. Machine learning approaches improve risk stratification for secondary . Open heart 8(2): ??.
+
+Krepper D; Cesari M; Hubel NJ; Zelger P; Sztankay MJ. 2024. Machine learning models including patient-reported outcome data in oncology: a . Journal of patient-reported outcomes 8(1): 126.
+
+Alowais, Shuroug A.; Alghamdi, Sahar S.; Alsuhebany, Nada; Alqahtani, Tariq; Alshaya, Abdulrahman I.; Almohareb, Sumaya N.; Aldairem, Atheer; Alrashed, Mohammed; Bin Saleh, Khalid; Badreldin, Hisham A.; Al Yami, Majed S.; Al Harbi, Shmeylan; Albekairy, Abdulkareem M.. 2023. Título desconhecido. BMC Medical Education 23(1): 689.
+
+Powell-Wiley, Tiffany M.; Baumer, Yvonne; Baah, Foster Osei; Baez, Andrew S.; Farmer, Nicole; Mahlobo, Christa T.; Pita, Mario A.; Potharaju, Kameswari A.; Tamura, Kosuke; Wallen, Gwenyth R.. 2022. Social Determinants of Cardiovascular Disease. Circulation Research 130(5): 782.
+
+Subrahmanya SVG; Shetty DK; Patil V; Hameed BMZ; Paul R; Smriti K; Naik N; Somani BK. 2022. The role of data science in healthcare advancements: applications, benefits, and . Irish journal of medical science 191(4): 1473-1483.
+
+Ono S; Goto T. 2022. Introduction to supervised machine learning in clinical epidemiology.. Annals of clinical epidemiology 4(3): 63-71.
+
+Ogunpola A; Saeed F; Basurra S; Albarrak AM; Qasem SN. 2024. Machine Learning-Based Predictive Models for Detection of Cardiovascular . Diagnostics (Basel, Switzerland) 14(2): ??.
+
+Talaat FM; Elnaggar AR; Shaban WM; Shehata M; Elhosseini M. 2024. CardioRiskNet: A Hybrid AI-Based Model for Explainable Risk Prediction and . Bioengineering (Basel, Switzerland) 11(8): ??.
+
+Tsiampalis, Thomas; Panagiotakos, Demosthenes. 2023. Título desconhecido. BMC Medical Research Methodology 23(1): 180.
+
+Shickel B; Tighe PJ; Bihorac A; Rashidi P. 2018. Deep EHR: A Survey of Recent Advances in Deep Learning Techniques for Electronic . IEEE journal of biomedical and health informatics 22(5): 1589-1604.
+
+Singh M; Kumar A; Khanna NN; Laird JR; Nicolaides A; Faa G; Johri AM; Mantella LE; Fernandes JFE; Teji JS; Singh N; Fouda MM; Singh R; Sharma A; Kitas G; Rathore V; Singh IM; Tadepalli K; Al-Maini M; Isenovic ER; Chaturvedi S; Garg D; Paraskevas KI; Mikhailidis DP; Viswanathan V; Kalra MK; Ruzsa Z; Saba L; Laine AF; Bhatt DL; Suri JS. 2024. Artificial intelligence for cardiovascular disease risk assessment in . EClinicalMedicine 73(?): 102660.
+
+Liang, Xintong; Jiang, Nan; Qi, Pengjia; Chen, Zhengkui; Tong, Jijun; Xia, Shudong. 2025. Título desconhecido. Biomedical Engineering Letters ?(?): ??.
+
+Rodgers JL; Jones J; Bolleddu SI; Vanthenapalli S; Rodgers LE; Shah K; Karia K; Panguluri SK. 2019. Cardiovascular Risks Associated with Gender and Aging.. Journal of cardiovascular development and disease 6(2): ??.
+
+Bhatnagar A. 2017. Environmental Determinants of Cardiovascular Disease.. Circulation research 121(2): 162-180.
+
+Sanchez-Martinez S; Camara O; Piella G; Cikes M; González-Ballester MÁ; Miron M; Vellido A; Gómez E; Fraser AG; Bijnens B. 2021. Machine Learning for Clinical Decision-Making: Challenges and Opportunities in . Frontiers in cardiovascular medicine 8(?): 765693.
+
+Sanchez-Pinto LN; Luo Y; Churpek MM. 2018. Big Data and Data Science in Critical Care.. Chest 154(5): 1239-1248.
+
+Elhaddad M; Hamam S. 2024. AI-Driven Clinical Decision Support Systems: An Ongoing Pursuit of Potential.. Cureus 16(4): ??.
+
+Björnson E; Borén J; Mardinoglu A. 2016. Personalized Cardiovascular Disease Prediction and Treatment-A Review of Existing . Frontiers in physiology 7(?): 2.
+

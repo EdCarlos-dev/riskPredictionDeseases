@@ -1,0 +1,80 @@
+PMID- 38711724
+OWN - NLM
+STAT- PubMed-not-MEDLINE
+LR  - 20240508
+IS  - 2168-8184 (Print)
+IS  - 2168-8184 (Electronic)
+IS  - 2168-8184 (Linking)
+VI  - 16
+IP  - 4
+DP  - 2024 Apr
+TI  - AI-Driven Clinical Decision Support Systems: An Ongoing Pursuit of Potential.
+PG  - e57728
+LID - 10.7759/cureus.57728 [doi]
+LID - e57728
+AB  - Clinical Decision Support Systems (CDSS) are essential tools in contemporary 
+      healthcare, enhancing clinicians' decisions and patient outcomes. The integration 
+      of artificial intelligence (AI) is now revolutionizing CDSS even further. This 
+      review delves into AI technologies transforming CDSS, their applications in 
+      healthcare decision-making, associated challenges, and the potential trajectory 
+      toward fully realizing AI-CDSS's potential. The review begins by laying the 
+      groundwork with a definition of CDSS and its function within the healthcare 
+      field. It then highlights the increasingly significant role that AI is playing in 
+      enhancing CDSS effectiveness and efficiency, underlining its evolving prominence 
+      in shaping healthcare practices. It examines the integration of AI technologies 
+      into CDSS, including machine learning algorithms like neural networks and 
+      decision trees, natural language processing, and deep learning. It also addresses 
+      the challenges associated with AI integration, such as interpretability and bias. 
+      We then shift to AI applications within CDSS, with real-life examples of 
+      AI-driven diagnostics, personalized treatment recommendations, risk prediction, 
+      early intervention, and AI-assisted clinical documentation. The review emphasizes 
+      user-centered design in AI-CDSS integration, addressing usability, trust, 
+      workflow, and ethical and legal considerations. It acknowledges 
+      prevailing obstacles and suggests strategies for successful AI-CDSS adoption, 
+      highlighting the need for workflow alignment and interdisciplinary collaboration. 
+      The review concludes by summarizing key findings, underscoring AI's 
+      transformative potential in CDSS, and advocating for continued research and 
+      innovation. It emphasizes the need for collaborative efforts to realize a future 
+      where AI-powered CDSS optimizes healthcare delivery and improves patient 
+      outcomes.
+CI  - Copyright © 2024, Elhaddad et al.
+FAU - Elhaddad, Malek
+AU  - Elhaddad M
+AD  - Medicine, The Hospital for Sick Children, Toronto, CAN.
+AD  - Medicine, Upper Canada College, Toronto, CAN.
+FAU - Hamam, Sara
+AU  - Hamam S
+AD  - Ophthalmology, Queen Elizabeth University Hospital, Glasgow, GBR.
+LA  - eng
+PT  - Journal Article
+PT  - Review
+DEP - 20240406
+PL  - United States
+TA  - Cureus
+JT  - Cureus
+JID - 101596737
+PMC - PMC11073764
+OTO - NOTNLM
+OT  - ai bias
+OT  - artificial intelligence (ai)
+OT  - clinical decision support systems (cdss)
+OT  - convolutional neural networks (cnn)
+OT  - deep learning models
+OT  - interpretability
+OT  - machine learning algorithms
+OT  - natural language processing (nlp)
+OT  - recurrent neural networks
+OT  - user-centric interface
+COIS- The authors have declared that no competing interests exist.
+EDAT- 2024/05/07 06:42
+MHDA- 2024/05/07 06:43
+PMCR- 2024/04/06
+CRDT- 2024/05/07 03:38
+PHST- 2024/04/05 00:00 [accepted]
+PHST- 2024/05/07 06:43 [medline]
+PHST- 2024/05/07 06:42 [pubmed]
+PHST- 2024/05/07 03:38 [entrez]
+PHST- 2024/04/06 00:00 [pmc-release]
+AID - 10.7759/cureus.57728 [doi]
+PST - epublish
+SO  - Cureus. 2024 Apr 6;16(4):e57728. doi: 10.7759/cureus.57728. eCollection 2024 Apr.

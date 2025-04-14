@@ -1,0 +1,19 @@
+datascience_venv
+
+# Ignorar toda a pasta data e peristence
+data/*
+
+# Permitir que a pasta apareça
+!data/input/
+!data/intermediate
+!data/output
+
+# ignorar todos os arquivos dentro da pasta Comente as linhas para que os arquivos sejam carregados no git
+data/input/*
+data/intermediate/*
+data/output/*
+
+# marcador para manter a pasta visível no Git
+!data/input/.gitkeep
+!data/intermediate/.gitkeep
+!data/output/.gitkeep

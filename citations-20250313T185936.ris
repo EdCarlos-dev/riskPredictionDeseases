@@ -1,0 +1,38 @@
+Provider: Silverchair
+Database: Oxford University Press
+Content: text/plain; charset="UTF-8"
+
+TY  - JOUR
+AU  - Greenland, Sander
+AU  - Daniel, Rhian
+AU  - Pearce, Neil
+T1  - Outcome modelling strategies in epidemiology: traditional methods and basic
+          alternatives
+PY  - 2016
+Y1  - 2016/04/01
+DO  - 10.1093/ije/dyw040
+JO  - International Journal of Epidemiology
+JA  - Int J Epidemiol
+VL  - 45
+IS  - 2
+SP  - 565
+EP  - 575
+SN  - 0300-5771
+AB  - Controlling for too many potential confounders can lead to or aggravate problems of data
+          sparsity or multicollinearity, particularly when the number of covariates is large in
+          relation to the study size. As a result, methods to reduce the number of modelled
+          covariates are often deployed. We review several traditional modelling strategies,
+          including stepwise regression and the ‘change-in-estimate’ (CIE) approach to deciding
+          which potential confounders to include in an outcome-regression model for estimating
+          effects of a targeted exposure. We discuss their shortcomings, and then provide some basic
+          alternatives and refinements that do not require special macros or programming.
+          Throughout, we assume the main goal is to derive the most accurate effect estimates
+          obtainable from the data and commercial software. Allowing that most users must stay
+          within standard software packages, this goal can be roughly approximated using basic
+          methods to assess, and thereby minimize, mean squared error (MSE).
+Y2  - 3/13/2025
+UR  - https://doi.org/10.1093/ije/dyw040
+ER  - 
+
+
+
