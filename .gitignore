@@ -1,5 +1,5 @@
 datascience_venv
-
+datascience_venv_old
 # Ignorar toda a pasta data e peristence
 data/*
 
