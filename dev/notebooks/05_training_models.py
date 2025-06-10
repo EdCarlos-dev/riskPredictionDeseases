@@ -196,3 +196,41 @@ if __name__ == '__main__':
     df['target'] = y
 
     run_experiment(df, target_column='target', experiment_name='teste_rfecv')
+
+
+'''   
+
+class ModelContainer:
+    def __init__(self, models=None):
+        self.models = models or {
+            'logistic_regression': LogisticRegression(),
+            'svm': SVC(),
+            'random_forest': RandomForestClassifier(),
+            'naive_bayes': GaussianNB(),
+            'knn': KNeighborsClassifier(),
+            'decision_tree': DecisionTreeClassifier()
+        }
+        self.trained_models = {}
+
+    def train(self, X, y, test_size=0.2, random_state=42):
+         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=random_state)
+         for name, model in self.models.items():
+            model.fit(X_train, y_train)
+            self.trained_models[name] = {'model': model, 'X_test': X_test, 'y_test': y_test}
+
+    def predict(self, model_name, X):
+        if model_name in self.trained_models:
+            return self.trained_models[model_name]['model'].predict(X)
+        else:
+            raise ValueError(f"Model '{model_name}' not trained yet.")
+    
+    def evaluate(self):
+        results = {}
+        for name, trained_model in self.trained_models.items():
+            y_pred = trained_model['model'].predict(trained_model['X_test'])
+            accuracy = accuracy_score(trained_model['y_test'], y_pred)
+            report = classification_report(trained_model['y_test'], y_pred)
+            results[name] = {'accuracy': accuracy, 'classification_report': report}
+        return results
+
+'''
