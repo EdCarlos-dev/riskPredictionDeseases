@@ -1,0 +1,20 @@
+Abreviação	Modelo	Parâmetros Base
+ABC	Ada Boost Classifier	random_state=42
+CBC	Cat Boost Classifier	random_state=42, verbose=0, auto_class_weights='Balanced'
+DTC	Decision Tree Classifier	random_state=42, class_weight='balanced'
+ETC	Extra Trees Classifier	random_state=42, class_weight='balanced'
+GBC	Gradient Boosting Classifier	random_state=42
+GNB	Gaussian NB	-
+HGB	Hist Gradient Boosting Classifier	random_state=42
+KNN	K Neighbors Classifier	-
+LDA	Linear Discriminant Analysis	-
+LGBM	LGBM Classifier	random_state=42, class_weight='balanced'
+LR	Logistic Regression	random_state=42, class_weight='balanced', max_iter=1000
+MLP	MLP Classifier	random_state=42, max_iter=1000, hidden_layer_sizes=(100,)
+PAC	Passive Aggressive Classifier	random_state=42, class_weight='balanced'
+QDA	Quadratic Discriminant Analysis	-
+RDC	Ridge Classifier	random_state=42, class_weight='balanced'
+RFC	Random Forest Classifier	random_state=42, class_weight='balanced'
+SGD	SGD Classifier	random_state=42, loss='log_loss', class_weight='balanced'
+SVM	SVC	random_state=42, class_weight='balanced', max_iter=1000, probability=True
+XGB	XGB Classifier	random_state=42, use_label_encoder=False, eval_metric='logloss'

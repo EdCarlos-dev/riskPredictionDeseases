@@ -1,0 +1,30 @@
+Sugestões de Melhoria
+Estrutura de Pipeline e Reutilização:
+
+Problema: O código está em um script linear. Se você quiser testar com um dataset diferente (ex: com outra estratégia de imputação ou com balanceamento), precisará copiar e colar grande parte do código.
+
+Sugestão: Encapsular toda a lógica de treinamento e avaliação em uma classe ModelComparisonPipeline. Isso organiza o código, facilita a reutilização e permite que você execute todo o pipeline com uma única chamada, passando o DataFrame como parâmetro. O script refatorado implementa essa estrutura.
+
+Análise de Feature Importance:
+
+Problema: A tabela de resultados mostra o que cada modelo alcançou, mas não por que. Entender quais variáveis mais influenciaram as previsões é uma parte crucial da análise em um TCC.
+
+Sugestão: Para cada modelo que suporte (.feature_importances_ ou .coef_), extraia e salve a importância das features. Crie um gráfico de barras com as 15-20 features mais importantes. Isso enriquece imensamente a sua discussão de resultados, permitindo conectar as previsões do modelo com o conhecimento do domínio (fatores de risco conhecidos para doenças cardíacas).
+
+Avaliação da Calibração e Probabilidades:
+
+Problema: Modelos podem ter um bom poder de discriminação (AUC alto) mas prever probabilidades mal calibradas (ex: prever 70% de chance de risco quando a chance real é de 90%).
+
+Sugestão: Adicione a Curva de Calibração como um dos gráficos de avaliação. Ela mostra quão confiáveis são as probabilidades previstas pelo modelo. Isso é especialmente importante se o objetivo for usar o modelo para quantificar o nível de risco de um paciente, e não apenas classificá-lo.
+
+Curva de Precisão-Recall (PRC):
+
+Problema: Em datasets muito desbalanceados, a Curva ROC pode ser excessivamente otimista. A Curva de Precisão-Recall (PRC) é frequentemente mais informativa nesses casos, pois foca no desempenho da classe minoritária (positiva).
+
+Sugestão: Além da Curva ROC, gere e salve a Curva PRC para cada modelo. A área sob a curva PRC (AUC-PR) é uma métrica muito valiosa para comparar modelos em cenários de desbalanceamento severo.
+
+Gerenciamento de Modelos Salvos:
+
+Problema: O script atual não salva os objetos de modelo treinados. Se você quiser reutilizar o melhor modelo para fazer novas predições, precisará treiná-lo novamente.
+
+Sugestão: Use a biblioteca joblib para salvar o objeto de cada modelo treinado em um arquivo .pkl ou .joblib. Isso permite carregar o modelo posteriormente de forma instantânea.
