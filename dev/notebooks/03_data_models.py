@@ -1,9 +1,83 @@
+# %% [markdown]
+# # Description
+
+# %%
+''' 
+Possibilidade de gerar um script para rodar todos esses modelos 
+usando a mesma distribuição de treino e teste 
+Salvando por nome e método de feature selection e balanceamento
+
+DADO 
+- Tratamento de dados
+- Balanceado e não balanceado
+
+-Treino
+-Teste
+
+MODELOS
+
+ABC - AdaBoostClassifier,
+CBC - CatBoostClassifier,                      
+DTC - DecisionTreeClassifier,
+ETC - ExtraTreesClassifier,                   
+GBC - GradientBoostingClassifier,
+GNB - GaussianNB,
+HGB - HistGradientBoostingClassifier,                 
+KNN - KNeighborsClassifier,
+LDA - LinearDiscriminantAnalysis,
+LGBM - LGBMClassifier,
+LR - LogisticRegression,
+MLP - MLPClassifier,                           
+PAC - PassiveAggressiveClassifier,                        
+QDA - QuadraticDiscriminantAnalysis,
+RDC - RidgeClassifier,                                 
+RFC - RandomForestClassifier,
+SGD - SGDClassifier,                           
+SVM - SVC,
+XGB - XGBClassifier,   
+
+
+
+PARÂMETROS DOS MODELOS
+
+MÉTRICAS
+
+Confusion Matrix
+Precisionn
+Recall
+F1 Score
+Dice
+AUC
+Curva ROC PRC
+
+GRÁFICOS
+
+Curva ROC
+Curva PRC
+Curva de aprendizado
+Curva de validação
+Curva de calibração
+Curva de Feature Importance
+Curva de Confusão
+
+ARQUIVO DO MODELO PKL
+# Salvar o modelo em um arquivo
+
+UPDATE FUTURO
+
+StackingClassifier
+BaggingClassifier
+GridSearchCV
+'''
+
+# %% [markdown]
+# # Libs
 
 # %%
 # --- 1. Importação das Bibliotecas ---
 
 import os
-import joblib
+# import joblib
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -280,9 +354,12 @@ notebook_dir_project_predict = os.path.normpath(f"{diretorio_atual_projeto}{os.s
 print(diretorio_atual_projeto)
 print(notebook_dir_project_predict)
 
-output_dir = f'{notebook_dir_project_predict}data{os.sep}output{os.sep}2023{os.sep}output_{experiment_name_path}{os.sep}test_train_path'
+output_dir = f'{notebook_dir_project_predict}data{os.sep}output{os.sep}2023{os.sep}output_{experiment_name_path}'
+output_dir_train_test = f'{notebook_dir_project_predict}data{os.sep}output{os.sep}2023{os.sep}output_{experiment_name_path}{os.sep}test_train_path'
 
 os.makedirs(output_dir, exist_ok=True)
+os.makedirs(output_dir_train_test, exist_ok=True)
+
 
 # %% [markdown]
 # Tabela detalhes dos modelos
@@ -293,11 +370,11 @@ df_modelos_expandido = criar_tabela_expandida(MODELS_PARAMETERS)
 
 # Gerar o DataFrame
 df_modelos = criar_tabela_modelos_parametros(MODELS_PARAMETERS)
-df_modelos.to_csv('df_models_params.tsv', sep='\t',index=False )
+df_modelos.to_csv(f'{output_dir}{os.sep}df_models_params.tsv', sep='\t',index=False )
 
 
 # %% [markdown]
-# Dados
+# # Dados de entrada
 
 # %%
 
@@ -347,69 +424,89 @@ print(len(list_sas_name_continuous))
 print(len(list_sas_name_categorical))
 
 # %% [markdown]
-# # Standard Scaler  /  One-Hot Encoding
+# # Cat Boost
 
 # %% [markdown]
 # em teste
 
 # %%
-# Preparando e realizando as ultimsas etapas de tratamento dos dados para os modelos
+# 0) Supondo df_limpo_final já carregado e coluna alvo definida
+X = df_limpo_final.drop(columns=[NOME_COLUNA_ALVO]).copy()
+y = df_limpo_final[NOME_COLUNA_ALVO].astype(int)
 
+# 1) Identifique quais colunas são contínuas e quais são categóricas (você já tem essas listas)
+cont_cols = list_sas_name_continuous          # contínuas
+cat_cols  = list_sas_name_categorical         # categóricas
 
-# --- 2. Execução da Lógica ---
+# 2) Garanta que categóricas estejam como string/categoria (evita o erro “cat_features must be integer or string”)
+X[cat_cols] = X[cat_cols].astype(str)
 
-df = df_limpo_final.copy()
-print(f"Dados carregados. Shape: {df.shape}")
-
-# Separar X e y
-X = df.drop(columns=[NOME_COLUNA_ALVO])
-y = df[NOME_COLUNA_ALVO]
-
-# Divisão Estratificada em Treino e Teste
-print("\nDividindo os dados em 80% treino e 20% teste...")
+# 3) Split estratificado
+from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y,
-    test_size=0.2,
-    random_state=42,
-    stratify=y
+    X, y, test_size=0.2, stratify=y, random_state=42
 )
-print(f"Divisão concluída. Shapes: X_train({X_train.shape}), X_test({X_test.shape})")
 
-# --- One-Hot Encoding (Dummização) ---
-print(f"\nAplicando One-Hot Encoding em {len(list_sas_name_categorical)} colunas categóricas...")
-X_train = pd.get_dummies(X_train, columns=list_sas_name_categorical, dtype=int)
-X_test = pd.get_dummies(X_test, columns=list_sas_name_categorical, dtype=int)
-
-# Alinhar colunas para garantir que treino e teste tenham as mesmas features
-# (isso lida com casos raros onde uma categoria só aparece em um dos conjuntos)
-X_train_final, X_test_final = X_train.align(X_test, join='left', axis=1, fill_value=0)
-print(f"Dummização concluída. Novo shape de X_train_final: {X_train_final.shape}")
-
-
-# --- Normalização APENAS nas colunas quantitativas ---
-print(f"\nAplicando StandardScaler em {len(list_sas_name_continuous)} colunas quantitativas...")
+# 4) (Opcional) Escale somente as contínuas (CatBoost não precisa, mas pode manter)
+from sklearn.preprocessing import StandardScaler
 scaler = StandardScaler()
+X_train_scaled = X_train.copy()
+X_test_scaled  = X_test.copy()
+X_train_scaled[cont_cols] = scaler.fit_transform(X_train[cont_cols])
+X_test_scaled[cont_cols]  = scaler.transform(X_test[cont_cols])
 
-# Ajustar o scaler APENAS nos dados de treino
-scaler.fit(X_train_final[list_sas_name_continuous])
+# 5) Índices das colunas categóricas para o DataFrame atual
+cat_features_idx = [X_train_scaled.columns.get_loc(c) for c in cat_cols]
 
-# Aplicar a transformação nos dados de treino e teste
-X_train_final[list_sas_name_continuous] = scaler.transform(X_train_final[list_sas_name_continuous])
-X_test_final[list_sas_name_continuous] = scaler.transform(X_test_final[list_sas_name_continuous])
+# 6) CatBoost
+from catboost import CatBoostClassifier
+model = CatBoostClassifier(
+    random_state=42,                 # (sinônimo de random_state)
+    # depth=6,
+    # learning_rate=0.1,
+    # iterations=5000,
+    # loss_function='Logloss',
+    # eval_metric='AUC',
+    auto_class_weights='Balanced',  # ajuda no desbalanceamento
+    verbose=False
+)
+# 'CBC': {'random_state': 42, 'verbose': 0, 'auto_class_weights': 'Balanced'},
 
-print("Normalização concluída.")
+print("\nTreinando CatBoost com early stopping...")
+model.fit(
+    X_train_scaled, y_train,
+    cat_features=cat_features_idx,
+    eval_set=(X_test_scaled, y_test),
+    early_stopping_rounds=200,
+    use_best_model=True
+)
 
-# --- Salvar os 4 arquivos ---
-os.makedirs(output_dir, exist_ok=True)
+# 7) Avaliação
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score, RocCurveDisplay, confusion_matrix, classification_report
+import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
 
-X_train_final.to_csv(os.path.join(output_dir , 'X_train.csv'), index=False)
-X_test_final.to_csv(os.path.join(output_dir , 'X_test.csv'), index=False)
-y_train.to_csv(os.path.join(output_dir , 'y_train.csv'), index=False)
-y_test.to_csv(os.path.join(output_dir , 'y_test.csv'), index=False)
+p_test = model.predict_proba(X_test_scaled)[:, 1]
+y_pred = (p_test >= 0.5).astype(int)
 
-print(f"\nArquivos de treino e teste, processados e prontos para modelagem, foram salvos na pasta: {output_dir}")
+print(f"Acurácia: {accuracy_score(y_test, y_pred):.4f}")
+print(f"Precisão: {precision_score(y_test, y_pred):.4f}")
+print(f"Recall:   {recall_score(y_test, y_pred):.4f}")
+print(f"F1:       {f1_score(y_test, y_pred):.4f}")
+print(f"AUC:      {roc_auc_score(y_test, p_test):.4f}")
 
+cm = confusion_matrix(y_test, y_pred)
+plt.figure(figsize=(7,5))
+sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
+            xticklabels=['Previsto 0', 'Previsto 1'],
+            yticklabels=['Real 0', 'Real 1'])
+plt.title('Matriz de Confusão - CatBoost'); plt.xlabel('Previsto'); plt.ylabel('Real')
+plt.show()
 
+RocCurveDisplay.from_predictions(y_test, p_test)
+plt.title('Curva ROC - CatBoost')
+plt.plot([0,1],[0,1],'r--'); plt.show()
 
 
 # %%
@@ -421,7 +518,7 @@ como por exemplo a variável _STATE com 51 categorias
 '''
 
 # %% [markdown]
-# # Regressão Logística
+# # Modelo Teste
 
 # %%
 
@@ -473,7 +570,7 @@ print("\nDados normalizados com sucesso.")
 # class_weight='balanced' ajusta os pesos do modelo para dar mais importância
 # à classe minoritária (casos positivos de risco cardíaco), o que é essencial.
 # max_iter é aumentado para garantir a convergência em datasets maiores.
-model_code = 'ABC'
+model_code = 'CBC'
 model_class = MODELS_PARAMETERS[model_code][0]
 params_aceitos = model_class().get_params().keys()
 params_para_modelo = {k: v for k, v in MODELS_PARAMETERS[model_code][1].items() if k in params_aceitos}
@@ -530,7 +627,7 @@ print(classification_report(y_test, y_pred, target_names=['Negativo (0)', 'Posit
 # AUC (Área Sob a Curva) é uma métrica única que resume a performance.
 # Quanto mais perto de 1, melhor. 0.5 é um chute aleatório.
 
-print("\nGerando Curva ROC...")
+# print("\nGerando Curva ROC...")
 RocCurveDisplay.from_estimator(selected_model, X_test_scaled, y_test)
 plt.title('Curva ROC para Regressão Logística')
 plt.plot([0, 1], [0, 1], 'r--', label='Chute Aleatório')
@@ -567,8 +664,7 @@ display(coeficientes.tail(10))
 
 # %%
 # RODANDO OK
-experiment_name_path = 'experiment_14_08_2025'
-df_sem_vazamento = pd.read_csv(f'{notebook_dir_project_predict}data{os.sep}output{os.sep}2023{os.sep}{experiment_name_path}{os.sep}brfss_2023_cleaned_to_model.csv')
+df_sem_vazamento = pd.read_csv(f'{notebook_dir_project_predict}data{os.sep}output{os.sep}2023{os.sep}output_{experiment_name_path}{os.sep}brfss_2023_cleaned_to_model.csv')
 
 df_sem_vazamento = df_sem_vazamento.drop(columns=[ 'CVDINFR4', 'CVDCRHD4'])
 NOME_COLUNA_ALVO = '_MICHD'
@@ -612,7 +708,7 @@ if dados_prontos:
    
     
     # Criar uma pasta para salvar os resultados, se não existir
-    pasta_resultados = f'{notebook_dir_project_predict}data{os.sep}output{os.sep}2023{os.sep}{experiment_name_path}{os.sep}resultados_modelos'
+    pasta_resultados = f'{notebook_dir_project_predict}data{os.sep}output{os.sep}2023{os.sep}output_{experiment_name_path}{os.sep}resultados_modelos'
     if not os.path.exists(pasta_resultados):
         os.makedirs(pasta_resultados)
     print(f"\nResultados serão salvos na pasta: '{pasta_resultados}'")
@@ -726,6 +822,104 @@ else:
 
 
 # %% [markdown]
+# mat . confucion percent
+
+# %%
+import pandas as pd
+import os
+
+def gerar_tabela_cm_percentual(caminho_tabela_entrada: str, caminho_tabela_saida: str):
+    """
+    Lê a tabela de resultados com contagens absolutas da matriz de confusão,
+    gera uma nova tabela com valores em porcentagem e formata para ser
+    compatível com editores de planilha em português (vírgula decimal, ponto e vírgula como separador).
+
+    Parâmetros:
+        caminho_tabela_entrada (str): Caminho para o arquivo '01_comparacao_modelos.csv'.
+        caminho_tabela_saida (str): Caminho para salvar o novo arquivo '02_comparacao_modelos_percentual.csv'.
+    """
+    try:
+        # Carregar a tabela de resultados original
+        df_resultados = pd.read_csv(caminho_tabela_entrada)
+        print(f"Tabela de resultados original carregada de: {caminho_tabela_entrada}")
+
+        # --- Calcular os totais de classes reais ---
+        total_reais_pos = df_resultados.loc[0, 'VP (Verdadeiro Positivo)'] + df_resultados.loc[0, 'FN (Falso Negativo)']
+        total_reais_neg = df_resultados.loc[0, 'VN (Verdadeiro Negativo)'] + df_resultados.loc[0, 'FP (Falso Positivo)']
+
+        print(f"\nTotal de Positivos Reais no conjunto de teste: {total_reais_pos}")
+        print(f"Total de Negativos Reais no conjunto de teste: {total_reais_neg}")
+
+        # Criar uma cópia do DataFrame para a nova tabela
+        df_percentual = df_resultados.copy()
+
+        # --- Calcular as colunas de porcentagem ---
+        df_percentual['VP (%)'] = (df_percentual['VP (Verdadeiro Positivo)'] / total_reais_pos) * 100
+        df_percentual['FN (%)'] = (df_percentual['FN (Falso Negativo)'] / total_reais_pos) * 100
+        df_percentual['VN (%)'] = (df_percentual['VN (Verdadeiro Negativo)'] / total_reais_neg) * 100
+        df_percentual['FP (%)'] = (df_percentual['FP (Falso Positivo)'] / total_reais_neg) * 100
+
+        # --- Selecionar e reordenar as colunas para a tabela final ---
+        colunas_metricas = ['Modelo', 'Acurácia', 'Precisão', 'Recall', 'F1-Score', 'AUC']
+        colunas_percentuais = ['VP (%)', 'FN (%)', 'VN (%)', 'FP (%)']
+        
+        df_tabela_final = df_percentual[colunas_metricas + colunas_percentuais]
+
+        # --- Arredondar os valores numericamente ANTES de salvar ---
+        # Isso mantém os tipos de dados como números, mas com a precisão desejada
+        for col in ['Acurácia', 'Precisão', 'Recall', 'F1-Score', 'AUC']:
+            df_tabela_final[col] = df_tabela_final[col].round(4)
+        for col in colunas_percentuais:
+            df_tabela_final[col] = df_tabela_final[col].round(2)
+
+
+        # --- Salvar a nova tabela com a formatação correta para planilhas em português ---
+        os.makedirs(os.path.dirname(caminho_tabela_saida), exist_ok=True)
+        df_tabela_final.to_csv(
+            caminho_tabela_saida, 
+            index=False, 
+            sep=';',      # Define o ponto e vírgula como separador de colunas
+            decimal=','   # Define a vírgula como separador decimal
+        )
+        
+        print(f"\nNova tabela com porcentagens salva com sucesso em: {caminho_tabela_saida}")
+        print("O arquivo foi salvo com separador decimal de vírgula (,) e separador de coluna de ponto e vírgula (;).")
+        
+        # Para exibição no notebook, podemos formatar separadamente
+        print("\n--- Tabela Comparativa (Formatada para Exibição no Notebook) ---")
+        print(df_tabela_final.to_string())
+
+
+    except FileNotFoundError:
+        print(f"ERRO: O arquivo de entrada não foi encontrado em '{caminho_tabela_entrada}'.")
+        print("Por favor, execute o script de modelagem principal primeiro.")
+    except Exception as e:
+        print(f"Ocorreu um erro inesperado: {e}")
+
+
+notebook_dir_project_predict = os.path.normpath(f"{os.getcwd()}{os.sep}..{os.sep}..{os.sep}") + os.sep
+experiment_name_path = 'experiment_17_09_2025' # Use o nome correto do seu experimento
+
+pasta_resultados = os.path.join(
+    notebook_dir_project_predict, 'data', 'output', '2023',
+    f'output_{experiment_name_path}', 'resultados_modelos'
+)
+
+# Caminho para a tabela de entrada (gerada pelo script de modelagem)
+caminho_tabela_csv_entrada = os.path.join(pasta_resultados, "01_comparacao_modelos.csv")
+
+# Caminho para a nova tabela de saída
+caminho_tabela_csv_saida = os.path.join(pasta_resultados, "02_comparacao_modelos_percentual.csv")
+
+# --- Execução ---
+gerar_tabela_cm_percentual(
+    caminho_tabela_entrada=caminho_tabela_csv_entrada,
+    caminho_tabela_saida=caminho_tabela_csv_saida
+)
+
+
+
+# %% [markdown]
 # Arredondando n casas decimais
 
 # %%
@@ -761,10 +955,22 @@ def formatar_df_resultados(df_resultados: pd.DataFrame, casas_decimais: int = 4)
             
     return df_formatado
 
+# %% [markdown]
+# Tabela de resultados dos modelos com menos casas decimais
+
 # %%
 df_round_results = formatar_df_resultados(df_resultados, 4)
-df_round_results.to_csv('df_round_results.csv', sep=',',index=False)
+df_round_results.to_csv(f'{pasta_resultados}{os.sep}df_round_results.csv', sep=',',index=False)
 df_round_results
+
+# %% [markdown]
+# Valores de VP FP VN FN em porcentagem
+
+# %%
+
+
+# %% [markdown]
+# Dados de Feature Importance
 
 # %%
 
